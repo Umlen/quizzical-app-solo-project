@@ -13,9 +13,11 @@ export default function Quiz() {
         return quiz.map((question, key) => {
             const answersArray = createAnswersArray(question.correct_answer, question.incorrect_answers);
             return ( 
-                <div key={key}>
-                    <p>{question.question}</p>
-                    {answersElements(answersArray)}
+                <div key={key} className='question-container'>
+                    <p className='question-text'>{question.question}</p>
+                    <div className='answers-container'>
+                        {answersElements(answersArray)}
+                    </div>
                 </div>
             );
         });
@@ -27,10 +29,15 @@ export default function Quiz() {
         return arrayCopy;
     }
 
-    const answersElements = (answersArr) => answersArr.map((answer, key) => <div key={key}>{answer}</div>);
+    const answersElements = (answersArr) => answersArr.map((answer, key) => (
+            <div key={key} className='answer-wrapper'>
+                <p>{answer}</p>
+            </div>
+        )
+    );
 
     return (
-        <div className="quiz-container">
+        <div className='quiz-container'>
             {renderQuiz()}
         </div>
     );
