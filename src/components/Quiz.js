@@ -26,7 +26,7 @@ export default function Quiz(props) {
     const [scores, setScores] = useState(undefined);
 
     useEffect(() => {
-        fetch('https://opentdb.com/api.php?amount=5&type=multiple&encode=base64')
+        fetch(`https://opentdb.com/api.php?amount=5&type=multiple&encode=base64${props.category}`)
             .then(res => res.json())
             .then(data => {
                 const quizArray = data.results.map((question) => {
@@ -138,8 +138,8 @@ export default function Quiz(props) {
         <div className='quiz-container'>
             {renderQuiz()}
             {scores === undefined ? 
-                <CheckBtn clickHandler = {checkAnswers} /> : 
-                <QuizResult scores={scores} quizStateToggler={props.newQuizHandler} />
+                <CheckBtn clickHandler={checkAnswers} /> : 
+                <QuizResult scores = {scores} quizStateToggler={props.newQuizHandler} />
             }
         </div>
     );
