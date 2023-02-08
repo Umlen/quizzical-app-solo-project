@@ -5,11 +5,11 @@ import Quiz from './components/Quiz';
 function App() {
   const [startQuiz, setStartQuiz] = useState(false);
 
-  const startQuizToggler = () => setStartQuiz(prevStartQuiz => !prevStartQuiz);
+  const quizToggler = () => setStartQuiz(prevStartQuiz => !prevStartQuiz);
 
   return (
     <main>
-      {startQuiz ? <Quiz /> : <StartQuiz startBtnHandler={startQuizToggler} />}
+      {startQuiz ? <Quiz newQuizHandler={quizToggler} /> : <StartQuiz startBtnHandler={quizToggler} />}
     </main>
   );
 }
