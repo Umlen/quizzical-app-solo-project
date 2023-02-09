@@ -26,7 +26,7 @@ export default function Quiz(props) {
     const [scores, setScores] = useState(undefined);
 
     useEffect(() => {
-        fetch(`https://opentdb.com/api.php?amount=5&type=multiple&encode=base64${props.category}`)
+        fetch(`https://opentdb.com/api.php?amount=5&type=multiple&encode=base64${props.category}${props.difficult}`)
             .then(res => res.json())
             .then(data => {
                 const quizArray = data.results.map((question) => {

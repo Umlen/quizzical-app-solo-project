@@ -17,14 +17,14 @@ export default function CategoryComponent(props) {
     }
 
     return (
-        <div className='category-select-wrapper'>
+        <div className='option-wrapper'>
             <label htmlFor='category-select'>Choose quiz category</label>
             <select 
                 value={props.category} 
                 onChange={(e) => props.categoryHandler(e)} 
                 id='category-select' 
                 name='category' 
-                className='category-select'
+                className='option-select'
             >
                 <option value=''>Any category</option>
                 {categoriesRender()}
