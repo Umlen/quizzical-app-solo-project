@@ -1,3 +1,4 @@
+import '../style/quiz.css';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Buffer } from 'buffer';
@@ -26,6 +27,7 @@ export default function Quiz(props) {
     const [scores, setScores] = useState(undefined);
 
     useEffect(() => {
+        console.log(`USE EFFECT!!!!`);
         fetch(`https://opentdb.com/api.php?amount=5&type=multiple&encode=base64${props.category}${props.difficult}`)
             .then(res => res.json())
             .then(data => {
@@ -40,24 +42,26 @@ export default function Quiz(props) {
                 });
                 setQuiz(quizArray);
             });
-    }, []);
+            
+        function createAnswersArray(correctAnswer, incorrectAnswersArr) {
+            const arrayCopy = [...incorrectAnswersArr];
+            const answersArray = [];
+            arrayCopy.splice(Math.floor(Math.random() * 4), 0, correctAnswer);
+            arrayCopy.map(answer => 
+                answersArray.push( 
+                    {
+                        id: nanoid(),
+                        answer: decodeApiData(answer), 
+                        selected: false,
+                        style: 'answer-wrapper unselected-answer'
+                    }
+                )
+            );
+            return answersArray;
+        }
+    }, [props.category, props.difficult]);
 
-    function createAnswersArray(correctAnswer, incorrectAnswersArr) {
-        const arrayCopy = [...incorrectAnswersArr];
-        const answersArray = [];
-        arrayCopy.splice(Math.floor(Math.random() * 4), 0, correctAnswer);
-        arrayCopy.map(answer => 
-            answersArray.push( 
-                {
-                    id: nanoid(),
-                    answer: decodeApiData(answer), 
-                    selected: false,
-                    style: 'answer-wrapper unselected-answer'
-                }
-            )
-        );
-        return answersArray;
-    }
+    console.log(`RENDERED!!!!`);
 
     function decodeApiData(str) {
         return Buffer.from(str, 'base64').toString('utf-8');
@@ -69,14 +73,14 @@ export default function Quiz(props) {
                 <div key={key} className='question-container'>
                     <p className='question-text'>{question.question}</p>
                     <div className='answers-container' id={question.id}>
-                        {answersElements(question.answers)}
+                        {createAnswersElements(question.answers)}
                     </div>
                 </div>
             );
         });
     }
 
-    function answersElements(answersArr) {
+    function createAnswersElements(answersArr) {
         return answersArr.map((answer, key) => {
             return (
                 <div key={key} id={answer.id} className={answer.style} onClick={answerClickHandler}>

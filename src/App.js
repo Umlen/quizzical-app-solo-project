@@ -1,3 +1,4 @@
+import './style/app.css';
 import { useState } from 'react';
 import StartQuiz from './components/StartQuiz';
 import Quiz from './components/Quiz';
